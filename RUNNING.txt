@@ -1,0 +1,68 @@
+--------Required Modules to install with pip---------
+spark framework - should be on the cluster
+dask framework - pip install "dask[complete]"
+sklearn
+statsmodels
+tqdm
+pandas_datareader
+wordcloud
+seaborn
+pandas
+matplotlib
+langdetect
+nltk
+textblob
+numpy
+requests
+
+--------News Headlines Part-------
+
+--------fetch raw headlines from reddit.-------
+python news_fetch_api.py [destination folder] [subbreddit name] [timestamp start] [page_size_per_request]
+use 0 arguments in this first step. we will pass in arguments later, only destination folder for now
+python news_fetch_api.py raw_headlines_folder 0 0 0
+
+if we pass in 0 arguments it will fetch with default values: 
+worldnews subbreddit
+1199174400 jan 1 2008
+500 headlines per page.
+
+--------Clean and transform raw headline data.-------
+spark-submit news_headline_etl.py [raw input folder] [cleaned output folder]
+spark-submit news_headline_etl.py news_headlines_raw news_headlines_cleaned
+
+cleaned data will be placed in the output folder after running this.
+
+--------Plot exploratory word clouds with cleaned headlines.-------
+spark-submit headline_word_plots.py [cleaned headline data input] [output path for plot images]
+spark-submit headline_word_plots.py news_headlines_cleaned plots/wordclouds
+
+--------Plot exploratory time series with cleaned headlines and output aggregations.-------
+spark-submit sentiment_time_series.py [cleaned headline data input] [output path for plot images]
+spark-submit sentiment_time_series.py news_headlines_cleaned plots/series
+
+--------Train sentiment prediction model with cleaned data and save trained model.-------
+spark-submit headline_sentiment_prediction.py [cleaned headline data input] [trained model saving path]
+spark-submit headline_sentiment_prediction.py news_headlines_cleaned models/sentiment
+
+--------Start streaming application to test the predictions.-------
+spark-submit streaming_application.py [stream folder to watch] [trained model to use for prediction]
+spark-submit streaming_application.py input_stream models/sentiment
+
+then run the reddit fetch api from step 1 in another shell window but write it to the stream folder
+python news_fetch_api.py input_stream worldnews 1572591634 2
+this will retrieve 2 new headlines every second from november to recent dates.
+
+
+--------Stock analysis-------
+
+--------Collect stock price data for arbitrary number of available companies. Save it in stock_data directory.----------python stock_historical.py NKE XOM AAPL AMZN BABA
+
+--------Dask dataframe to Perform ETL/EDA on the collected data for all companies in t stock_data directory.-----------
+python eda_dask_all_stock.py stock_data/*.csv
+
+--------Generate trend, seasonality, residual, and lag of the given stock prices of a company retrieved from step 1.------------
+python stock_decompose.py stock_data/XOM.csv
+
+--------Integrate decomposed data with sentiment data and explore the correlation.---------
+python stock_sentim_corr.py stock_data/XOM.csv

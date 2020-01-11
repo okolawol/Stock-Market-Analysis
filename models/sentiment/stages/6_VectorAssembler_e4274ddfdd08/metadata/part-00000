@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1574919380529,"sparkVersion":"2.4.4","uid":"VectorAssembler_e4274ddfdd08","paramMap":{"inputCols":["headline_vector","score","num_comments","subjectivity","word_frequecy"],"outputCol":"features"},"defaultParamMap":{"outputCol":"VectorAssembler_e4274ddfdd08__output","handleInvalid":"error"}}

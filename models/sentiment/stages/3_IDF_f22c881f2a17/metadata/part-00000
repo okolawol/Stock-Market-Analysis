@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.IDFModel","timestamp":1574919380180,"sparkVersion":"2.4.4","uid":"IDF_f22c881f2a17","paramMap":{"minDocFreq":5,"outputCol":"word_frequecy","inputCol":"word_counts"},"defaultParamMap":{"minDocFreq":0,"outputCol":"IDF_f22c881f2a17__output"}}

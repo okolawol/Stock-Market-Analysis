@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorSizeHint","timestamp":1574919380466,"sparkVersion":"2.4.4","uid":"VectorSizeHint_37071798cab1","paramMap":{"inputCol":"word_frequecy","size":100},"defaultParamMap":{"handleInvalid":"error"}}
